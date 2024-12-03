@@ -1,8 +1,5 @@
 <?php
-    if(!isset($_SESSION)) 
-    { 
-        session_start(); 
-    } 
+    session_start(); 
     if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SESSION["role"]) && $_SESSION["role"] == "Author"){
         echo '<nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-center">
                     <div class="container-fluid">
