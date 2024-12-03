@@ -1,8 +1,8 @@
 <?php
-    $servername = getenv('MYSQL_HOST');
-    $username = getenv('MYSQL_USER');
-    $password = getenv('MYSQL_PASSWORD');
-    $dbname = getenv('MYSQL_DBNAME');
+    $servername = 'blogoinatorserver.mysql.database.azure.com';
+    $username = 'blogoinatoradmin@blogoinatorserver';
+    $password = 'zaq1@WSX';
+    $dbname = 'blog';
 
     $conn = new mysqli($servername, $username, $password, $dbname);
 
