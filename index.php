@@ -29,6 +29,7 @@ if(!isset($_SESSION))
                         include 'articles.php';
                     ?>
                 </main>
+		    adfgdjfsgafsdjkljfd
             </div>
             <footer class="text-center text-lg-start">
                 <div class="text-center p-3">2023 Tomasz Wilk</div>
