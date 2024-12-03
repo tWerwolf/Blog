@@ -1,6 +1,6 @@
 <?php
     $servername = 'blogoinatorserver.mysql.database.azure.com';
-    $username = 'blogoinatoradmin@blogoinatorserver';
+    $username = 'blogoinatoradmin@blogoinatorserver.mysql.database.azure.com';
     $password = 'zaq1@WSX';
     $dbname = 'blog';
 
