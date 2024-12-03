@@ -1,3 +1,6 @@
+<?php
+session_start();
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -19,7 +22,6 @@
             <nav>
                 <ul>
                     <?php
-                        session_start();
                         if (isset($_SESSION['user_id'])) {
                             // Jeśli użytkownik jest zalogowany, wyświetl przycisk "Wyloguj się"
                             echo "<li><a href='logout.php'>Wyloguj się</a></li>";
