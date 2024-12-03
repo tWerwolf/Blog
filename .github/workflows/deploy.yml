@@ -1,0 +1,38 @@
+name: Build and Deploy to Azure
+
+on:
+  push:
+    branches:
+      - main  # Lub inna gałąź, która ma uruchamiać wdrożenie
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+    # 1. Pobierz kod źródłowy
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    # 2. Zaloguj się do Azure
+    - name: Log in to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
+
+    # 3. Zaloguj się do Azure Container Registry (ACR)
+    - name: Log in to ACR
+      run: az acr login --name rejestrkontenerow
+
+    # 4. Zbuduj obraz Dockera
+    - name: Build Docker image
+      run: |
+        docker build -t rejestrkontenerow.azurecr.io/blog:${{ github.sha }} .
+        docker push rejestrkontenerow.azurecr.io/blog:${{ github.sha }}
+
+    # 5. Zaktualizuj Web App w Azure
+    - name: Deploy to Azure Web App
+      uses: azure/webapps-deploy@v2
+      with:
+        app-name: blogoinatorapp
+        images: rejestrkontenerow.azurecr.io/blog:${{ github.sha }}
