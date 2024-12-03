@@ -4,13 +4,10 @@
     $password = 'zaq1@WSX';
     $dbname = 'blog';
 
-    $conn = new mysqli($servername, $username, $password, $dbname);
+    $mysqli = new mysqli($servername, $username, $password, $dbname, 3306);
 
-    if ($conn->connect_error) {
-        die("Connection failed: " . $conn->connect_error);
-    } 
-
-    $mysqli->ssl_set(NULL, NULL, "DigiCertGlobalRootCA.crt.pem", NULL, NULL);  // Wskaż ścieżkę do certyfikatu
+    // Użyj SSL
+    $mysqli->ssl_set(NULL, NULL, "DigiCertGlobalRootCA.crt.pem", NULL, NULL); // Upewnij się, że ścieżka do certyfikatu jest poprawna
     if (!$mysqli->real_connect($servername, $username, $password, $dbname, 3306, NULL, MYSQLI_CLIENT_SSL)) {
         die("Connection failed: " . $mysqli->connect_error);
     }
