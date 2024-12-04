@@ -34,18 +34,18 @@
     if($sql->num_rows > 0){
         $_SESSION["titleErr"] = "Artykuł o takim tytule już istnieje";
         header("location: addArticle.php");
+    }else{
+        $sql = $conn->prepare('INSERT INTO articles (ArticleTitle, ArticleSlug, ArticleDescr, ArticleContent, ArticleDate, ImageName, ImageType, ImageData, UserID) VALUES (?, ?, ?, ?, now(), ?, ?, ?, ?)');
+        $sql->bind_param('sssssssi', $_SESSION["title"], $articleSlug, $_SESSION["desc"], $_SESSION["content"], $_SESSION["fileName"], $_SESSION["fileType"], $_SESSION["fileData"], $_SESSION["id"]);
+        $sql->execute();
+        if ($sql->affected_rows == 1) {
+            $_SESSION["title"] = "";
+            $_SESSION["desc"] = "";
+            $_SESSION["content"] = "";
+            header("location: index.php");
+            } else {
+            echo "Error: " . $sql->error;
+            }
     }
-
-    $sql = $conn->prepare('INSERT INTO articles (ArticleTitle, ArticleSlug, ArticleDescr, ArticleContent, ArticleDate, ImageName, ImageType, ImageData, UserID) VALUES (?, ?, ?, ?, now(), ?, ?, ?, ?)');
-    $sql->bind_param('sssssssi', $_SESSION["title"], $articleSlug, $_SESSION["desc"], $_SESSION["content"], $_SESSION["fileName"], $_SESSION["fileType"], $_SESSION["fileData"], $_SESSION["id"]);
-    $sql->execute();
-    if ($sql->affected_rows == 1) {
-        $_SESSION["title"] = "";
-        $_SESSION["desc"] = "";
-        $_SESSION["content"] = "";
-        header("location: index.php");
-        } else {
-        echo "Error: " . $sql->error;
-        }
 
 ?>
