@@ -6,9 +6,9 @@ if(!isset($_SESSION))
     session_start(); 
 } 
 
-$name = $lastName = $email = $password = $repeatPassword = $captcha = "";
-$nameCheck = $lastNameCheck = $emailCheck = $passwordCheck = $repeatPasswordCheck = $captchaCheck = false;
-$nameErr = $lastNameErr = $emailErr = $passwordErr = $repeatPasswordErr = $captchaErr = "";
+$name = $lastName = $email = $password = $repeatPassword = "";
+$nameCheck = $lastNameCheck = $emailCheck = $passwordCheck = $repeatPasswordCheck =  false;
+$nameErr = $lastNameErr = $emailErr = $passwordErr = $repeatPasswordErr = "";
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     
@@ -71,23 +71,7 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
         $repeatPasswordCheck = true;
     }
 
-    if(empty($_POST["captcha"])){
-        $captchaErr = "Uzupełnij CAPTCHA";
-    }else{
-        $captcha = test_input($_POST["captcha"]);
-        if(isset($_SESSION["captcha"])){
-            if(strcasecmp($_SESSION["captcha"], $captcha) !== 0){
-                $captchaErr = "CAPTCHA nieprawidłowa";
-            }else{
-                $captchaCheck = true;
-            }
-
-        }else{
-            $captchaErr = "Coś poszło nie tak. Odśwież stronę i spróbuj jeszcze raz";
-        }
-    }
-
-    if($nameCheck == true && $lastNameCheck == true && $emailCheck == true && $passwordCheck == true && $repeatPasswordCheck == true && $captchaCheck == true){
+    if($nameCheck == true && $lastNameCheck == true && $emailCheck == true && $passwordCheck == true && $repeatPasswordCheck == true){
         $sql = 'INSERT INTO users (Name, LastName, Password, Email, Role) VALUES ("'.$name.'", "'.$lastName.'", "'.password_hash($password, PASSWORD_DEFAULT).'", "'.$email.'", "Author")';
         if ($conn->query($sql) === TRUE) {
             header("location: login.php");
@@ -154,13 +138,7 @@ function test_input($data) {
                             <input type="password" name="repeatPassword" class="form-control border border-dark" required>
                             <span class="text-danger"><?php echo $repeatPasswordErr ?></span></br>
                         </div>
-                        <div class="form-group">
-                            <label for="captcha">Rozwiąż CAPTCHA:</label></br>
-                            <input type="text" name="captcha" class="form-control border border-dark" required><br>
-                            <img src="captcha.php?rand=<?php echo rand(); ?>" id="captchaImage">
-                            <span class="text-danger"><?php  echo $captchaErr ?></span></br>
-                        </div>
-                        
+                                                
                         <input type="submit" class="btn btn-dark" value="Zarejestruj się">
                     </form>
                 </div>
