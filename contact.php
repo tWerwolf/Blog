@@ -56,11 +56,11 @@
                     $mail->Host = 'smtp.gmail.com';
                     $mail->Port = 465;
                     $mail->SMTPSecure = PHPMAILER::ENCRYPTION_SMTPS;
-                    $mail->Username = 'tomwilku100@gmail.com';
-                    $mail->Password = 'oiqm hnwm lvxq wgur';
+                    $mail->Username = '';
+                    $mail->Password = '';
                     $mail->CharSet = 'UTF-8';
                     $mail->setFrom($email, $email);
-                    $mail->addAddress('tomwilku100@gmail.com');
+                    $mail->addAddress('');
                     $mail->addReplyTo($email);
                     $mail->Subject = $topic;
                     $mail->Body = $content;
