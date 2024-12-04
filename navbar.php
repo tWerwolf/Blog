@@ -25,7 +25,7 @@
                     </div>
                 </nav>';
     }else if(isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true && isset($_SESSION["role"]) && $_SESSION["role"] == "Admin"){
-        echo '<nav class="navbar navbar-expand-md bg-dark navbar-dark justify-content-center">
+        echo '<nav class="navbar navbar-expand-md bg-light navbar-dark justify-content-center">
                 <div class="container-fluid">
                     <a class="navbar-brand" href="index.php">GuitarWolf</a>
                     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
