@@ -12,7 +12,7 @@
     if((isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) && ((isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") || (isset($_SESSION["id"]) && $_SESSION["id"]*1 == $userId*1))){
         $sql = $conn->prepare("DELETE FROM articles WHERE ArticleId=".$id);
         $sql->execute();
-        header("profilePage.php")
+         header("location: profilePage.php");
     }
         
 ?>
