@@ -10,12 +10,26 @@
         exit;
     }
 
-    $articleSlug = slug($_SESSION["title"]);
-
+    function slug($text){ 
+        $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
+        $text = trim($text, '-');
+        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
+        $text = strtolower($text);
+        $text = preg_replace('~[^-\w]+~', '', $text);   
+        if (empty($text))
+        {
+            $_SESSION['titleErr'] = "Tytuł jest wymagany";
+            header("location: addArticle.php");
+        }
+        return $text;
+      }
     require_once "config.php";
+    
+    $articleSlug = slug($_SESSION["title"]);
 
     $sql = $conn->prepare('SELECT ArticleSlug FROM articles WHERE ArticleSlug = ?');
     $sql->bind_param('s', $articleSlug);
+    $sql->execute();
     $sql->store_result();
     if($sql->num_rows > 0){
         $_SESSION["titleErr"] = "Artykuł o takim tytule już istnieje";
@@ -33,19 +47,5 @@
         } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
         }
-
-    function slug($text){ 
-        $text = preg_replace('~[^\\pL\d]+~u', '-', $text);
-        $text = trim($text, '-');
-        $text = iconv('utf-8', 'us-ascii//TRANSLIT', $text);
-        $text = strtolower($text);
-        $text = preg_replace('~[^-\w]+~', '', $text);   
-        if (empty($text))
-        {
-            $_SESSION['titleErr'] = "Tytuł jest wymagany";
-            header("location: addArticle.php");
-        }
-        return $text;
-      }
 
 ?>
