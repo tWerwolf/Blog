@@ -14,8 +14,8 @@
 
     require_once "config.php";
 
-    $sql = $conn->prepare('SELECT ArticleSlug FROM articles WHERE ArticleSlug = "'.$articleSlug.'"');
-    $sql->execute();
+    $sql = $conn->prepare('SELECT ArticleSlug FROM articles WHERE ArticleSlug = ?');
+    $sql->bind_param('s', $articleSlug);
     $sql->store_result();
     if($sql->num_rows > 0){
         $_SESSION["titleErr"] = "Artykuł o takim tytule już istnieje";
