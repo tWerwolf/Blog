@@ -10,9 +10,9 @@
     $userId = $_GET["UserId"];
 
     if((isset($_SESSION["loggedin"]) && $_SESSION["loggedin"] === true) && ((isset($_SESSION["role"]) && $_SESSION["role"] === "Admin") || (isset($_SESSION["id"]) && $_SESSION["id"]*1 == $userId*1))){
-        echo $userId." ".$_SESSION["id"];
         $sql = $conn->prepare("DELETE FROM articles WHERE ArticleId=".$id);
         $sql->execute();
+        header("profilePage.php")
     }
         
 ?>
