@@ -36,9 +36,4 @@ jobs:
       with:
         app-name: blogoinatorapp
         images: rejestrkontenerow.azurecr.io/blog:${{ github.sha }}
-      env:
-        # Zmienna środowiskowa dla aplikacji, aby połączyć się z bazą danych MySQL
-        MYSQL_HOST: ${{ secrets.MYSQL_HOST }}
-        MYSQL_USER: ${{ secrets.MYSQL_USER }}
-        MYSQL_PASSWORD: ${{ secrets.MYSQL_PASSWORD }}
-        MYSQL_DBNAME: ${{ secrets.MYSQL_DBNAME }}
+
