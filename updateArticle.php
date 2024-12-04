@@ -7,11 +7,6 @@ if(!isset($_SESSION))
     session_start(); 
 } 
 
-require_once 'htmlpurifier/HTMLPurifier.standalone.php';
-$config = HTMLPurifier_Config::createDefault();
-$config->set('HTML.ForbiddenElements', ['img']);
-$purifier = new HTMLPurifier($config);
-
 
 $titleUpdate = $descUpdate = $contentUpdate = $slugUpdate = "";
 $_SESSION["updateErr"] = "";
@@ -22,10 +17,10 @@ $titleCheck = $descCheck = $contentCheck = false;
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
     $articleId = $_POST["articleId"];
-    if(empty($purifier->purify($_POST["title"]))) {
+    if(empty($_POST["title"])) {
         $_SESSION["updateErr"] = "Tytuł jest wymagany";
     }else {
-        $titleUpdate = test_input($purifier->purify($_POST["title"]));
+        $titleUpdate = test_input($_POST["title"]);
         $slugUpdate = slug($titleUpdate);
         $sql = $conn->prepare('SELECT ArticleId, ArticleSlug FROM articles WHERE ArticleSlug = "'.$slugUpdate.'"');
         $sql->execute();
@@ -38,17 +33,17 @@ if($_SERVER["REQUEST_METHOD"] == "POST"){
             $titleCheck = true;
         }
         }
-    if(empty($purifier->purify($_POST["desc"]))){
+    if(empty($_POST["desc"])){
         $_SESSION["updateErr"] = "Opis jest wymagany";
     }else{
-            $descUpdate = test_input($purifier->purify($_POST["desc"]));
+            $descUpdate = test_input($_POST["desc"]);
             $descCheck = true;
         }
 
-    if(empty($purifier->purify($_POST["content"]))){
+    if(empty($_POST["content"])){
         $_SESSION["updateErr"] = "Treść artykułu jest wymagana";
     }else{
-        $contentUpdate = trim($purifier->purify($_POST["content"]));
+        $contentUpdate = trim($_POST["content"]);
         $contentCheck = true;
     }
 
