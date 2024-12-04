@@ -5,11 +5,6 @@ if(!isset($_SESSION))
     session_start(); 
 } 
 
-require_once 'htmlpurifier/HTMLPurifier.standalone.php';
-$config = HTMLPurifier_Config::createDefault();
-$config->set('HTML.ForbiddenElements', ['img']);
-$purifier = new HTMLPurifier($config);
-
 
 $_SESSION["title"] = $_SESSION["desc"] = $_SESSION["content"] = "";
 $_SESSION["descErr"] = $_SESSION["contentErr"] = $_SESSION["titleErr"] = $_SESSION["imageErr"] = $_SESSION["fileData"] =  $_SESSION["fileType"] = $_SESSION["fileName"] = "";
@@ -20,24 +15,24 @@ $allowTypes = array('jpg', 'png', 'jpeg');
 
 
 if($_SERVER["REQUEST_METHOD"] == "POST"){
-    if(empty($purifier->purify($_POST["title"]))) {
+    if(empty($_POST["title"])) {
         $_SESSION["titleErr"] = "Tytuł jest wymagany";
     }else {
-        $_SESSION["title"] = test_input($purifier->purify($_POST["title"]));
+        $_SESSION["title"] = test_input($_POST["title"]);
         $titleCheck = true;
         }
     
-    if(empty($purifier->purify($_POST["desc"]))){
+    if(empty($_POST["desc"])){
         $_SESSION["descErr"] = "Opis jest wymagany";
     }else{
-            $_SESSION["desc"] = test_input($purifier->purify($_POST["desc"]));
+            $_SESSION["desc"] = test_input($_POST["desc"]);
             $descCheck = true;
         }
 
-    if(empty($purifier->purify($_POST["content"]))){
+    if(empty($_POST["content"])){
         $_SESSION["contentErr"] = "Treść artykułu jest wymagana";
     }else{
-        $_SESSION["content"] = $purifier->purify(trim($_POST["content"]));
+        $_SESSION["content"] = trim($_POST["content"]);
         $contentCheck = true;
     }
 
