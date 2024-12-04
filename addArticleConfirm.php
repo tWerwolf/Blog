@@ -45,7 +45,7 @@
         $_SESSION["content"] = "";
         header("location: index.php");
         } else {
-        echo "Error: " . $sql . "<br>" . $conn->error;
+        echo "Error: " . $sql->error;
         }
 
 ?>
